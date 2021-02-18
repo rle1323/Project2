@@ -1,5 +1,5 @@
 # Project 2 - Clustering and Drug Discovery
-## Due 02/17/2021
+## Due 02/19/2021
 
 ![BuildStatus](https://github.com/rle1323/Project2/workflows/HW2/badge.svg?event=push)
 
