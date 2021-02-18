@@ -199,7 +199,6 @@ def silhouette_score(ligands, labels, distance_matrix=None):
 		
 	return silhouette_score
 
-
 ############### Class Definitions ###############
 
 class Ligand():
