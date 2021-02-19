@@ -90,3 +90,65 @@ Returns:
 		An nxn distance matrix where each entry distance_matrix[i,j] corresponds to the Tanimoto distance between Ligand i and Ligand j
 		in the input list
 ```
+silhouette_score(ligands, labels, distance_matrix=None):
+```
+Calculates the mean silhouette score from the results of a clustering. This score can be used as a general quality metric of a clustering.
+Silhouette score is defined as (b-a)/max(a,b), where a is the mean distance from a point to the other points in its clustser,
+and b is defined as the mean distance from a point to the points in the next closest cluster. Has range[-1,1]. 
+
+Arguments:
+	ligands::[Ligand]
+		List of n ligand objects that have been clustered
+	labels::[int]
+		List of n cluster labels for each of the n ligands
+	(Optional) distance_matrix::np.array(int)
+		Distance matrix of the supplied ligands. If not provided, the function calls build_distance_matrix() to build the matrix
+	
+Returns:
+	silhouette_score::float
+		Mean silhouette score of all of the ligands in this clustering.
+```
+
+### Classes
+
+Ligand:
+```
+A class to hold and transform data provided in ligand_information.csv
+```
+__init__(self, id, score, smiles, on_bits):
+```
+Provided a ligand ID, Vina score, SMILES string, and dense molecular fingerprint vector, initializes a Ligand object and transforms the dense 
+molecular fingerprint into a bit vector.
+
+Arguments:
+	id::int
+		Unique ID of the ligand in the dataset
+	score::float
+		Vina score of the ligand against ACE-Spike2 interface
+	smiles::string
+		SMIlES string of the molecule, holding structural and composition encoding
+	on_bits::string
+		Extended Connectivity Fingerprint (ECFP) of the compound
+	
+Returns:
+	None
+```
+fingerprint_array(self):
+```
+Transforms the ECFP into a bit vector and stores the bit vector in a new attribute
+
+Arguments:
+	None
+		
+Returns:
+	None
+```
+
+Cluster:
+```
+A simple class holding information for the clusters in either Kmeans or agglomerative clustering
+```
+__init__(self, members, label, centroid=None):
+```
+Takes in a list of ligands as members, a label for the cluster, and an optional centroid argument (for Kmeans) and initializes a Cluster object
+```
