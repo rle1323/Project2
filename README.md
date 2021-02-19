@@ -148,7 +148,7 @@ __Cluster__:
 ```
 A simple class holding information for the clusters in either Kmeans or agglomerative clustering
 ```
-__init__(self, members, label, centroid=None):
+init(self, members, label, centroid=None):
 ```
 Takes in a list of ligands as members, a label for the cluster, and an optional centroid argument (for Kmeans) and initializes a Cluster object
 ```
