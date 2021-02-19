@@ -111,7 +111,7 @@ Returns:
 
 ### Classes
 
-Ligand:
+__Ligand__:
 ```
 A class to hold and transform data provided in ligand_information.csv
 ```
@@ -144,11 +144,215 @@ Returns:
 	None
 ```
 
-Cluster:
+__Cluster__:
 ```
 A simple class holding information for the clusters in either Kmeans or agglomerative clustering
 ```
 __init__(self, members, label, centroid=None):
 ```
 Takes in a list of ligands as members, a label for the cluster, and an optional centroid argument (for Kmeans) and initializes a Cluster object
+```
+
+__Clustering__:
+```
+A parent class for each of the two clustering methods, holding shared attributes and methods
+```
+
+init(self, num_clusters, seed=2000):
+```
+Initializes a Clustering object and optionally sets a seed.
+
+Arguments:
+	num_clusters::int
+		Number of desired clusters that the data will be placed into
+	seed::int
+		Random seed for reproducibility
+		
+Returns:
+	None
+```
+init_clusters(self):
+```
+Generic method to set initial locations of the clusters in the feature space. Specific methods are in the child class definitions. 
+```
+cluster(self):
+```
+Generic method that performs the specific clustering method implemented in the child classes
+```
+
+__HierarchicalClustering__:
+```
+Complete implementation of agglomerative hierarchical clustering. To use this class, initialize a HierarchicalClustering object and use it to call the 
+cluster() method on a set of ligands. Child class of Clustering
+```
+init(self, num_clusters, seed):
+```
+Uses the same attributes as the parent class Clustering, and initializes a HierarchicalClustering object
+Arguments:
+	num_clusters::int
+		Number of desired clusters that the data will be placed into
+	(Optional) seed::int
+		Random seed for reproducibility
+
+Returns:
+	None
+```
+build_id_dictionary(self, ligands):
+```
+Builds a dictionary with ligand ids as keys and the ligand row (0-indexed) in the dataset as the value. Saves the dictionary as an attribute
+
+Arguments:
+	ligands::[Ligand]
+		List of ligand objects for which the dictionary will be built
+		
+Returns:
+	None
+```
+
+init_clusters(self, ligands):
+```
+An agglomerative hierarchical method is used for this clustering, so every ligand is first assigned to its own cluster. A list of Cluster objects
+is set as a class attribute
+
+Arguments:
+	ligands::[Ligand]
+		List of ligand objects on which the clustering is being performed
+Returns:
+	None
+```
+complete_linkage(self, cluster1, cluster2): 
+```
+Finds the complete linkage betweeen two clusters. Complete linkage is defined as the greatest distance between any two members of the two clusters.
+
+Arguments:
+	cluster1::Cluster
+		First cluster whose complete linkage with cluster2 is being assessed
+	cluster2::Cluster
+		Second cluster whose complete linkage with cluster1 is being assessed
+		
+Returns:
+	complete_linkage::float
+		Complete linkage between cluster1 and cluster2
+```
+nearest_neighboring_clusters(self):
+```
+Finds the two closest clusters as defined by the linkage criterion, returns their indices in self.clusters
+
+Arguments:
+	None
+		
+Returns: 
+	nearest_neighbor1::int
+		Index of the first of the two nearest clusters. This index marks where this neighbor is held in the classes self.clusters list
+	nearest_neighbor2::int
+		Index of the second of the two nearest clusters. This index marks where this neighbor is held in the classes self.clusters list.
+```
+
+merge_nearest_clusters(self, i, j):
+```
+Merges two clusters, found at positions i and j in the self.clusters list. Performs merging by iteratively adding the members of 
+self.clusters[j] to the member list of self.clusters[i] and removing self.clusters[j] from the list of clusters
+
+Arguments:
+	i::int
+		Position of the cluster that is growing in membership in self.clusters
+	j::int
+		Position of the cluster whose members are merged into another cluster and eventually removed
+		
+Returns:
+	None
+```
+cluster(self, ligands, distance_matrix=None):
+```
+Wrapper method for hierarchical clustering that performs the above methods in their proper order.
+
+Arguments:
+	ligands::[Ligand]
+		List of Ligand objects that are being clustered
+	(Optional) distance_matrix::array(float)
+		A distance matrix of the ligands passed into this method. This argument is optional, and this method will build the 
+		distance matrix if it is not specified
+		
+Returns:
+	labels::[int]
+		List of labels with the same length as the input ligand list. Each label corresponds to the ligand at that same index in ligands
+```
+__PartitionClustering__:
+```
+Complete implementation of Kmeans partition clustering. To use this class, initialize a PartitionClustering object and use it to call the 
+cluster() method on a set of ligands. Child class of Clustering.
+```
+
+init(self, num_clusters, seed=1998, max_iterations=1000):
+```
+Uses the same attributes as the parent class Clustering with an additional "max_iterations" attribute, and initializes a PartitionClustering object
+
+Arguments:
+	num_clusters::int
+		Number of desired clusters that the data will be placed into
+	(Optional) seed::int
+		Random seed for reproducibility
+	(Optional) max_iterations::int
+		Number of iterations to perform if convergence is not reached
+		
+Returns:
+	None
+```
+init_clusters(self, ligands):
+```
+Uses a simplified kmeans++ initialization scheme to set initial clusters with centroid locations
+
+Arguments:
+	ligands::[Ligand]
+		List of ligand objects on which the clustering is being performed
+		
+Returns:
+	None
+```
+assign_cluster_membership(self, ligands):
+```
+Assigns each ligand to the nearest cluster as defined by Tanimoto distance between the ligand and cluster centroids.
+Adds the ligand to the cluster's memmbership list
+
+Arguments:
+	ligands::[Ligand]
+		List of ligand objects on which the clustering is being performed
+		
+Returns:
+	None
+```
+ update_cluster_centroids(self):
+```
+Recomputes the centroid after cluster members are changed. Each centroid feature is the mode of the feature in the cluster's members
+
+Arguments:
+	None
+		
+Returns:
+	None
+```
+check_convergence(self, old_memberships):
+```
+Checks the convergence condition for partition clustering. That is, checks whether cluster membership has changed for any of the ligands
+from one iteration to the next
+
+Arguments:
+	old_memberships::[[Ligand]]
+		List of membership lists, each of which contains the ligands belonging to each cluster
+		
+Returns:
+	::bool
+		True if the convergence criterion is met, false otherwise
+```
+cluster(self, ligands):
+```
+Wrapper function for partition clustering. Partition clustering is implemented with Kmeans++ algorithm
+
+Arguments:
+	ligands::[Ligand] 
+		The list of ligands that are being clustered 
+
+Returns:
+	labels::[int]
+		List of labels with the same length as the input ligand list. Each label corresponds to the ligand at that same index in ligands
 ```
