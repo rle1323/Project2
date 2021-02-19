@@ -143,7 +143,7 @@ def silhouette_score(ligands, labels, distance_matrix=None):
 			List of n ligand objects that have been clustered
 		labels::[int]
 			List of n cluster labels for each of the n ligands
-		distance_matrix::np.array(int) or None
+		(Optional) distance_matrix::np.array(int)
 			Distance matrix of the supplied ligands. If not provided, the function calls build_distance_matrix() to build the matrix
 	
 	Returns:
@@ -299,7 +299,6 @@ class Clustering():
 		pass
 		
 
-
 class HierarchicalClustering(Clustering):
 	"""
 	Complete implementation of agglomerative hierarchical clustering. To use this class, initialize a HierarchicalClustering object and use it to call the 
@@ -429,7 +428,6 @@ class HierarchicalClustering(Clustering):
 		# remove the 2nd cluster from the cluster list
 		del self.clusters[j]
 
-
 	
 	def cluster(self, ligands, distance_matrix=None):
 		"""
@@ -481,7 +479,6 @@ class HierarchicalClustering(Clustering):
 					labels.append(cluster.label)
 
 		return labels
-
 
 
 
@@ -662,7 +659,6 @@ class PartitionClustering(Clustering):
 
 				# check for convergence, and return if converged
 				if self._check_convergence(old_memberships) == True: 
-					print("Converged after ", i, "iterations")
 					break
 
 				# update the cluster centroids
