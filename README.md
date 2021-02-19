@@ -42,8 +42,7 @@ Returns:
 		A tuple of Ligand objects of length n, n being the number of ligands
  ```
  
-  
-<br>
+ 
 tanimoto_distance(bit_vec1, bit_vec2):
 ```
 Calculates the Tanimoto distance for two bit vectors of the same length. Tanimoto coefficient is defined as intersection(a,b)/union(a,b),
@@ -59,3 +58,20 @@ Returns:
 	distance::float
 		Tanimoto distance as defined in the function description between bit_vec1 and bit_vec2
 ```
+
+clustering_similarity(labels1, labels2)
+```
+Calculates the Jaccard similarity between two sets of clustering results. Inspired by the R function linked here:
+https://rdrr.io/cran/clusteval/man/jaccard_indep.html
+
+Arguments:
+	labels1::[int]
+		Prediction of cluster memberships from first clustering
+	labels2::[int]
+		Prediction of cluster memberships from second memberships
+	
+Returns:
+	similarity::float
+		Jaccard similarity defined as n_11/(n_11 + n_10 + n_01), where n_11 is number of observation pairs that are comembers in both clusterings, 
+		n_10 is number of observation pairs that are comembers in first cluster but not the second, and n_01 is number of observatoin pairs that are 
+		comembers in second cluster but not the first
