@@ -29,13 +29,13 @@ from the root directory of this project.
 
 read_ligand_data(filename)
 ```
-	Reads in the provided ligand data from csv format, and stores the ligands as a tuple of Ligand objects
+Reads in the provided ligand data from csv format, and stores the ligands as a tuple of Ligand objects
 
-	Arguments:
-		filename::str
-			Path to the file holding the ligand data
+Arguments:
+	filename::str
+		Path to the file holding the ligand data
 	
-	Returns:
-		ligands::tuple(Ligand)
-			A tuple of Ligand objects of length n, n being the number of ligands
+Returns:
+	ligands::tuple(Ligand)
+		A tuple of Ligand objects of length n, n being the number of ligands
  ```
