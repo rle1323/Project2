@@ -75,3 +75,18 @@ Returns:
 		Jaccard similarity defined as n_11/(n_11 + n_10 + n_01), where n_11 is number of observation pairs that are comembers in both clusterings, 
 		n_10 is number of observation pairs that are comembers in first cluster but not the second, and n_01 is number of observatoin pairs that are 
 		comembers in second cluster but not the first
+```
+
+build_distance_matrix(ligands):
+```
+Builds an nxn distance matrix for a set of n ligands, where distance is defined as (1-Tanimoto coefficient)
+
+Arguments:
+	ligands::[Ligand]
+		List of n Ligand objects that the distance matrix will be made for. Function unpacks the relevant attributes from each Ligand in the list
+	
+Returns:
+	distance_matrix::array(float)
+		An nxn distance matrix where each entry distance_matrix[i,j] corresponds to the Tanimoto distance between Ligand i and Ligand j
+		in the input list
+```
