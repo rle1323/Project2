@@ -27,6 +27,8 @@ from the root directory of this project.
 
 ## Documentation
 
+### Functions
+
 read_ligand_data(filename)
 ```
 Reads in the provided ligand data from csv format, and stores the ligands as a tuple of Ligand objects
@@ -39,3 +41,20 @@ Returns:
 	ligands::tuple(Ligand)
 		A tuple of Ligand objects of length n, n being the number of ligands
  ```
+ 
+ 
+tanimoto_distance(bit_vec1, bit_vec2):
+```
+Calculates the Tanimoto distance for two bit vectors of the same length. Tanimoto coefficient is defined as intersection(a,b)/union(a,b),
+and Tanimoto distance is defined as 1 - Tanimoto Coefficient
+
+Arguments:
+	bit_vec1::array(bool/int)
+		A numpy array of length n, in the case of these molecular fingerprint scores n=1024. Each entry is zero or one based on the absence or presence of 		   the motif that each feature represenets. 
+	bit_vec2::array(bool/int)
+		A numpy array of length n, in the case of these molecular fingerprint scores n=1024. Each entry is zero or one based on the absence or presence of 	           the motif that each feature represenets.
+	
+Returns:
+	distance::float
+		Tanimoto distance as defined in the function description between bit_vec1 and bit_vec2
+```
