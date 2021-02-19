@@ -43,6 +43,7 @@ Returns:
  ```
  
  
+
 tanimoto_distance(bit_vec1, bit_vec2):
 ```
 Calculates the Tanimoto distance for two bit vectors of the same length. Tanimoto coefficient is defined as intersection(a,b)/union(a,b),
