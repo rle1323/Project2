@@ -25,6 +25,8 @@ python -m pytest test/*
 ```
 from the root directory of this project.
 
+## Documentation
+
 read_ligand_data(filename)
 ```
 	Reads in the provided ligand data from csv format, and stores the ligands as a tuple of Ligand objects
